@@ -1,12 +1,12 @@
 [versions]
 # Base properties
-minecraft_version="1.21.7"
-yarn_mappings="1.21.7+build.6"
+minecraft_version="1.21.8"
+yarn_mappings="1.21.8+build.1"
 mappings_patch="1.21+build.4"
-neoforge="21.7.22-beta"
+neoforge="21.8.52"
 
 # Mod properties
-version="0.3.5"
+version="0.4.4"
 maven-group="org.thinkingstudio.forgematica"
 archives-name="Forgematica"
 
@@ -16,7 +16,7 @@ id-curseforge="912441"
 release_type="alpha"
 
 # Mod dependencies
-mafglib="0.3.9-mc1.21.7"
+mafglib="0.4.5-mc1.21.8"
 
 # Libraries
 jsr305="3.0.2"
