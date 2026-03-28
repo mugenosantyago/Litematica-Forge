@@ -16,7 +16,7 @@ id-curseforge="912441"
 release_type="alpha"
 
 # Mod dependencies
-mafglib="0.4.5-mc1.21.8"
+mafglib="0.4.5+mc1.21.8"
 
 # Libraries
 jsr305="3.0.2"

@@ -8,7 +8,7 @@ import org.joml.Matrix4fc;
 import org.joml.Vector4f;
 
 import com.mojang.blaze3d.buffers.GpuBufferSlice;
-import com.mojang.blaze3d.resource.ResourceHandle;
+import net.minecraft.client.util.Handle;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.ObjectAllocator;
@@ -135,10 +135,12 @@ public abstract class MixinWorldRenderer
     /** Sodium: draw opaque schematics after vanilla opaque in the main pass (1.21.8+ main-pass lambda). */
     @Inject(
             method = "method_62214",
+            remap = false,
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/render/SectionRenderState;renderSection(Lnet/minecraft/client/render/BlockRenderLayerGroup;)V",
                     ordinal = 0,
+                    remap = false,
                     shift = At.Shift.AFTER))
     private void litematica_renderMainSection_Opaque(
             GpuBufferSlice gpuBufferSlice,
@@ -146,12 +148,12 @@ public abstract class MixinWorldRenderer
             Camera camera,
             Profiler profiler,
             Matrix4f matrix4f,
-            ResourceHandle resourceHandle1,
-            ResourceHandle resourceHandle2,
+            Handle resourceHandle1,
+            Handle resourceHandle2,
             boolean renderOutline,
             Frustum frustum,
-            ResourceHandle resourceHandle3,
-            ResourceHandle resourceHandle4,
+            Handle resourceHandle3,
+            Handle resourceHandle4,
             CallbackInfo ci)
     {
         if (SodiumCompat.hasSodium())

@@ -2,7 +2,7 @@ package fi.dy.masa.litematica.compat.sodium;
 
 import fi.dy.masa.litematica.mixin.render.IMixinGameRenderer;
 import net.minecraft.client.MinecraftClient;
-import org.thinkingstudio.mafglib.loader.FoxifiedLoader;
+import net.neoforged.fml.ModList;
 
 public class SodiumCompat
 {
@@ -11,7 +11,7 @@ public class SodiumCompat
 
     public static void checkForSodium()
     {
-        hasSodium = FoxifiedLoader.isModLoaded("sodium");
+        hasSodium = ModList.get().isLoaded("sodium");
     }
 
     public static boolean hasSodium() { return hasSodium; }
