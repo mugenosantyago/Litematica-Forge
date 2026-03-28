@@ -8,7 +8,6 @@ import org.joml.Matrix4fc;
 import org.joml.Vector4f;
 
 import com.mojang.blaze3d.buffers.GpuBufferSlice;
-import net.minecraft.client.util.Handle;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.ObjectAllocator;
@@ -132,37 +131,6 @@ public abstract class MixinWorldRenderer
         LitematicaRenderer.getInstance().capturePreMainValues(fog, profiler);
     }
 
-    /** Sodium: draw opaque schematics after vanilla opaque in the main pass (1.21.8+ main-pass lambda). */
-    @Inject(
-            method = "method_62214",
-            remap = false,
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/render/SectionRenderState;renderSection(Lnet/minecraft/client/render/BlockRenderLayerGroup;)V",
-                    ordinal = 0,
-                    remap = false,
-                    shift = At.Shift.AFTER))
-    private void litematica_renderMainSection_Opaque(
-            GpuBufferSlice gpuBufferSlice,
-            RenderTickCounter tickCounter,
-            Camera camera,
-            Profiler profiler,
-            Matrix4f matrix4f,
-            Handle resourceHandle1,
-            Handle resourceHandle2,
-            boolean renderOutline,
-            Frustum frustum,
-            Handle resourceHandle3,
-            Handle resourceHandle4,
-            CallbackInfo ci)
-    {
-        if (SodiumCompat.hasSodium())
-        {
-            LitematicaRenderer.getInstance().piecewiseDrawBlockLayerGroup(BlockRenderLayerGroup.OPAQUE);
-            SodiumCompat.startBlockOutlineEnabled();
-        }
-    }
-
     @Inject(method = "renderBlockLayers", at = @At("TAIL"))
     private void litematica_onPrepareBlockLayers(Matrix4fc matrix4fc, double d, double e, double f, CallbackInfoReturnable<SectionRenderState> cir)
     {
@@ -197,6 +165,12 @@ public abstract class MixinWorldRenderer
 //        }
 
         LitematicaRenderer.getInstance().piecewisePrepareBlockLayers(matrix4fc, d, e, f, this.profiler);
+
+        if (SodiumCompat.hasSodium())
+        {
+            LitematicaRenderer.getInstance().piecewiseDrawBlockLayerGroup(BlockRenderLayerGroup.OPAQUE);
+            SodiumCompat.startBlockOutlineEnabled();
+        }
     }
 
     @Inject(method = "renderEntities",
